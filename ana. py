@@ -1,6 +1,19 @@
+import os
 from fastapi import FastAPI
+import uvicorn
+
 app = FastAPI()
 
 @app.get("/")
-def home():
-    return {"mesaj": "Uncelim Supreme Hazir"}
+async def root():
+    return {
+        "sistem_durumu": "AKTIF",
+        "protokol": "Uncelim Supreme",
+        "mesaj": "Operatör bağlantısı başarılı. Likidite verisi bekleniyor."
+    }
+
+if __name__ == "__main__":
+    # Railway'in dinamik portunu yakalamak zorunludur
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
